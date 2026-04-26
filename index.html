@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuestra Boda | Mirelli y Nevin</title>
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <style>
+      :root {
+        --azul-pastel: #aec6cf;
+        --azul-claro: #e6f0f4;
+        --azul-oscuro: #4a6e82;
+        --blanco: #ffffff;
+        --verde-ok: #4caf50;
+        --rojo-no: #f44336;
+        --color-papel: #fdfbf7;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: "Lato", sans-serif;
+        background-color: var(--azul-claro);
+        color: var(--azul-oscuro);
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      /* ==========================================
+           1. ANIMACIÓN DEL SOBRE DE INICIO CON FLORES
+           ========================================== */
+      .overlay-inicio {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--azul-claro);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+
+      .overlay-inicio h1 {
+        font-size: 4.5rem;
+        margin-bottom: 20px;
+        font-family: "Dancing Script", cursive;
+        color: var(--azul-oscuro);
+      }
+
+      .sobre-container {
+        position: relative;
+        width: 340px;
+        max-width: 85vw;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+
+      /* Capa 1: Flor detrás de todo */
+      .flor-1 {
+        position: absolute;
+        top: -30px;
+        left: -50px;
+        width: 160px;
+        z-index: 1;
+        transition: transform 0.8s ease;
+        pointer-events: none;
+      }
+
+      /* Capa 2: Sobre Abierto */
+      .sobre-abierto {
+        display: block;
+        width: 100%;
+        height: auto;
+        opacity: 0;
+        z-index: 2;
+        transition: opacity 0.8s ease;
+      }
+
+      /* Capa 3: Sobre Cerrado */
+      .sobre-cerrado {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        opacity: 1;
+        z-index: 3;
+        transition: opacity 0.8s ease;
+      }
+
+      /* Capa 4: Sello y texto M & N */
+      .sello {
+        font-family: "Dancing Script", cursive;
+        font-size: 2rem;
+        color: var(--blanco);
+        position: absolute;
+        bottom: 25%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        z-index: 4;
+        transition: opacity 0.4s ease;
+      }
+
+      /* Capa 5: Flor por delante del sobre */
+      .flor-2 {
+        position: absolute;
+        bottom: -30px;
+        right: -50px;
+        width: 180px;
+        z-index: 5;
+        transition: transform 0.8s ease;
+        pointer-events: none;
+      }
+
+      /* --- Animaciones al abrir --- */
+      .sobre-container.abierto .sobre-cerrado {
+        opacity: 0;
+      }
+      .sobre-container.abierto .sobre-abierto {
+        opacity: 1;
+      }
+      .sobre-container.abierto .sello {
+        opacity: 0;
+      }
+      /* Pequeño movimiento en las flores para darle vida */
+      .sobre-container.abierto .flor-1 {
+        transform: scale(1.05) translate(-5px, -5px) rotate(-5deg);
+      }
+      .sobre-container.abierto .flor-2 {
+        transform: scale(1.05) translate(5px, 5px) rotate(5deg);
+      }
+
+      .overlay-inicio.deslizar-arriba {
+        transform: translateY(-100%);
+      }
+
+      .btn-abrir {
+        background-color: var(--azul-oscuro);
+        color: var(--blanco);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 50px;
+        font-family: "Lato", sans-serif;
+        font-weight: bold;
+        transition:
+          background 0.3s,
+          transform 0.2s;
+        z-index: 10;
+      }
+      .btn-abrir:hover {
+        background-color: #375463;
+        transform: scale(1.05);
+      }
+
+      /* ==========================================
+           2. CONTENEDOR PRINCIPAL
+           ========================================== */
+      .papel-textura {
+        background-color: var(--color-papel);
+        background-image: url("textura_papel.png");
+        background-repeat: repeat;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 50px 20px 20px 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        min-height: 100vh;
+        display: none;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        font-family: "Dancing Script", cursive;
+        font-size: 4rem;
+        color: var(--azul-oscuro);
+        margin: 10px 0 20px 0;
+        line-height: 1;
+      }
+
+      .foto-pareja {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        /* Borde redondo naranja eliminado */
+        box-shadow: 0 8px 20px rgba(74, 110, 130, 0.2);
+        margin: 0 auto 20px auto;
+        display: block;
+      }
+
+      /* ==========================================
+           3. SECCIÓN: BANNERS Y CALENDARIO
+           ========================================== */
+      .banner-azul {
+        background-color: var(--azul-oscuro);
+        color: var(--blanco);
+        padding: 25px;
+        border-radius: 10px;
+        margin: 30px 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .seccion-titulo {
+        font-family: "Dancing Script", cursive;
+        font-size: 2.8rem;
+        color: var(--azul-pastel);
+        margin: 40px 0 20px 0;
+      }
+
+      .calendario-container {
+        border: 3px solid var(--azul-pastel);
+        border-radius: 12px;
+        max-width: 280px;
+        margin: 0 auto 30px auto;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      .cal-mes {
+        background-color: var(--azul-pastel);
+        color: var(--azul-oscuro);
+        font-weight: bold;
+        font-size: 1.3rem;
+        padding: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .cal-dias-semana {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        background-color: #f0f5f8;
+        padding: 10px 5px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+      .cal-numeros {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        padding: 15px 5px;
+        gap: 5px;
+      }
+      .cal-num {
+        padding: 5px;
+        font-size: 1.1rem;
+      }
+      .cal-marcado {
+        background-color: var(--azul-oscuro);
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+      }
+
+      /* ==========================================
+           4. SECCIÓN: LÍNEA DEL TIEMPO (ITINERARIO REDISEÑADO AL 100%)
+           ========================================== */
+      .wrapper-itinerario {
+        position: relative;
+        background-image: url("fondo_itinerario.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 30px 15px;
+        border-radius: 15px;
+        margin: 40px 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        background-color: rgba(255, 255, 255, 0.85);
+        background-blend-mode: overlay;
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 100%;
+        margin: 20px 0;
+        padding: 20px 0;
+      }
+
+      /* Línea central limpia */
+      .timeline::after {
+        content: "";
+        position: absolute;
+        width: 3px;
+        background-color: var(--azul-oscuro);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1.5px;
+        border-radius: 2px;
+        z-index: 1;
+      }
+
+      .timeline-item {
+        padding: 15px 0;
+        position: relative;
+        width: 50%;
+        box-sizing: border-box;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+        display: flex;
+        align-items: center;
+      }
+      .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Estilo para las cajas de texto */
+      .timeline-content {
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e1e8ed;
+        width: calc(100% - 70px); /* Espacio para el ícono por fuera */
+        box-sizing: border-box;
+        z-index: 3;
+      }
+
+      /* Posicionamiento para elementos IMPARES (a la izquierda) */
+      .timeline-item:nth-child(odd) {
+        left: 0;
+        justify-content: flex-start;
+        text-align: right;
+        padding-right: 15px; /* Espacio con la línea central */
+      }
+      .timeline-item:nth-child(odd) .timeline-content {
+        order: 1;
+        margin-right: auto;
+      }
+
+      /* Posicionamiento para elementos PARES (a la derecha) */
+      .timeline-item:nth-child(even) {
+        left: 50%;
+        justify-content: flex-end;
+        text-align: left;
+        padding-left: 15px; /* Espacio con la línea central */
+      }
+      .timeline-item:nth-child(even) .timeline-content {
+        order: 2;
+        margin-left: auto;
+      }
+
+      /* Íconos grandes y por FUERA (eliminado el círculo) */
+      .timeline-item::after {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2.2rem; /* Íconos más grandes */
+        color: var(--azul-oscuro);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none; /* Círculo eliminado */
+        border: none; /* Borde eliminado */
+        pointer-events: none;
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+
+      /* Íconos para IMPARES (a la derecha de la caja, fuera de la línea) */
+      .timeline-item:nth-child(odd)::after {
+        right: 0px;
+      }
+
+      /* Íconos para PARES (a la izquierda de la caja, fuera de la línea) */
+      .timeline-item:nth-child(even)::after {
+        left: 0px;
+      }
+
+      /* Contenido de texto */
+      .timeline-time {
+        font-weight: bold;
+        color: var(--azul-oscuro);
+        font-size: 1.1rem;
+      }
+      .timeline-text {
+        margin-top: 5px;
+        color: #555;
+      }
+
+      /* ÍCONOS ASCII ESPECÍFICOS Y GRANDES PARA CADA EVENTO */
+      .timeline-item:nth-child(1)::after {
+        content: "🎉";
+      } /* 4:00 PM - Recepción */
+      .timeline-item:nth-child(2)::after {
+        content: "📸";
+      } /* 5:00 PM - Fotos */
+      .timeline-item:nth-child(3)::after {
+        content: "💒";
+      } /* 5:30 PM - Ceremonia */
+      .timeline-item:nth-child(4)::after {
+        content: "🍽️";
+      } /* 6:30 PM - Comida */
+      .timeline-item:nth-child(5)::after {
+        content: "🎂";
+      } /* 7:30 PM - Pastel */
+      .timeline-item:nth-child(6)::after {
+        content: "💃";
+      } /* 8:00 PM - Baile */
+      .timeline-item:nth-child(7)::after {
+        content: "👋";
+      } /* 10:30 PM - Salida */
+
+      /* ==========================================
+           5. UBICACIÓN, REGALOS Y FORMULARIO
+           ========================================== */
+      .map-container {
+        border: 2px solid var(--azul-pastel);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .btn-accion {
+        display: inline-block;
+        background-color: var(--azul-pastel);
+        color: var(--azul-oscuro);
+        text-decoration: none;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: all 0.3s;
+        border: 2px solid var(--azul-oscuro);
+      }
+      .btn-accion:hover {
+        background-color: var(--azul-oscuro);
+        color: white;
+      }
+
+      .lista-invitados {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      .invitado-card {
+        background-color: white;
+        border: 1px solid #c2d4dc;
+        border-left: 5px solid var(--azul-pastel);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .invitado-nombre {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: var(--azul-oscuro);
+      }
+      .opciones-asistencia {
+        display: flex;
+        gap: 20px;
+      }
+      .opciones-asistencia label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #c2d4dc;
+        border-radius: 8px;
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        box-sizing: border-box;
+        resize: vertical;
+      }
+      button[type="submit"] {
+        background-color: var(--azul-oscuro);
+        color: var(--blanco);
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+        margin-top: 20px;
+        transition: background 0.3s;
+      }
+      button[type="submit"]:hover {
+        background-color: #375463;
+      }
+      #mensaje-respuesta {
+        margin-top: 20px;
+        font-weight: bold;
+        min-height: 24px;
+      }
+
+      /* Icono final */
+      .footer-icon {
+        text-align: center;
+        margin-top: 50px;
+        padding-bottom: 30px;
+      }
+      .footer-icon img {
+        width: 140px;
+        opacity: 0.8;
+        transition: transform 0.3s;
+      }
+
+      /* Responsivo general */
+      @media (max-width: 600px) {
+        .overlay-inicio h1 {
+          font-size: 3.5rem;
+        }
+        .timeline::after {
+          left: 8px;
+        } /* Mueve la línea central a la izquierda */
+        .timeline-item {
+          width: 100%;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: left;
+          flex-direction: row;
+        }
+        .timeline-item:nth-child(odd),
+        .timeline-item:nth-child(even) {
+          left: 0;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: left;
+          justify-content: flex-start;
+        }
+
+        .timeline-content {
+          width: calc(100% - 70px);
+          margin-left: 55px; /* Espacio para el ícono y la línea */
+        }
+        .timeline-item:nth-child(odd) .timeline-content,
+        .timeline-item:nth-child(even) .timeline-content {
+          order: 2;
+          margin-left: 55px;
+          margin-right: 0px;
+        }
+
+        /* Íconos grandes y por FUERA (eliminado el círculo) a la izquierda en móvil */
+        .timeline-item:nth-child(odd)::after,
+        .timeline-item:nth-child(even)::after {
+          left: 10px;
+          right: auto;
+          font-size: 1.8rem; /* Un poco más pequeños en móvil */
+        }
+        .opciones-asistencia {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .wrapper-itinerario {
+          background-image: url(fondo_itinerario_responsive.png);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay-inicio" id="pantalla-inicio">
+      <h1>Mirelli y Nevin</h1>
+
+      <div class="sobre-container" id="sobre">
+        <img src="flor_1.png" alt="Flor Decorativa" class="flor-1" />
+
+        <img
+          src="sobre_abierto.png"
+          alt="Sobre Abierto"
+          class="sobre-abierto"
+        />
+        <img
+          src="sobre_cerrado.png"
+          alt="Sobre Cerrado"
+          class="sobre-cerrado"
+        />
+
+        <div class="sello">M y N</div>
+
+        <img src="flor_2.png" alt="Flor Decorativa" class="flor-2" />
+      </div>
+
+      <button class="btn-abrir" onclick="abrirInvitacion()">
+        Abrir Invitación
+      </button>
+    </div>
+
+    <audio id="musicaFondo" loop controls>
+      <source
+        src="ordinary-wedding-version-alex-warren.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <div class="papel-textura" id="invitacion-principal">
+      <img src="foto.png" alt="Foto de Mirelli y Nevin" class="foto-pareja" />
+      <h1>Mirelli y Nevin</h1>
+
+      <div class="banner-azul">
+        Tenemos el honor de invitarte a celebrar con nosotros el inicio de
+        nuestra nueva vida juntos. ¡Tu presencia lo hará inolvidable!
+      </div>
+
+      <h2 class="seccion-titulo">Cuándo</h2>
+      <div class="calendario-container">
+        <div class="cal-mes">Junio 2026</div>
+        <div class="cal-dias-semana">
+          <div>D</div>
+          <div>L</div>
+          <div>M</div>
+          <div>M</div>
+          <div>J</div>
+          <div>V</div>
+          <div>S</div>
+        </div>
+        <div class="cal-numeros">
+          <div></div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+          <div>9</div>
+          <div>10</div>
+          <div>11</div>
+          <div>12</div>
+          <div>13</div>
+          <div>14</div>
+          <div>15</div>
+          <div>16</div>
+          <div>17</div>
+          <div>18</div>
+          <div>19</div>
+          <div class="cal-marcado">20</div>
+          <div>21</div>
+          <div>22</div>
+          <div>23</div>
+          <div>24</div>
+          <div>25</div>
+          <div>26</div>
+          <div>27</div>
+          <div>28</div>
+          <div>29</div>
+          <div>30</div>
+        </div>
+      </div>
+
+      <div class="wrapper-itinerario">
+        <h2 class="seccion-titulo" style="margin-top: 10px">Itinerario</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">4:00 PM</div>
+              <div class="timeline-text">Recepción</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">5:00 PM</div>
+              <div class="timeline-text">Fotos con los novios</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">5:30 PM</div>
+              <div class="timeline-text">Palabras y ceremonia de unión</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">6:30 PM</div>
+              <div class="timeline-text">Comida</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">7:30 PM</div>
+              <div class="timeline-text">Partida de pastel</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">8:00 PM</div>
+              <div class="timeline-text">Baile y DJ</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-time">10:30 PM</div>
+              <div class="timeline-text">Salida del Jardín de eventos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="seccion-titulo">Ubicación</h2>
+      <div
+        class="banner-azul"
+        style="
+          background-color: #f0f5f8;
+          color: var(--azul-oscuro);
+          border: 1px solid var(--azul-pastel);
+        "
+      >
+        <p style="margin-top: 0">
+          <strong>Jardín de Eventos en Cuautitlán Izcalli</strong><br />Estado
+          de México
+        </p>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3757.200239025195!2d-99.22520620983852!3d19.66146079262476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d21e527daef643%3A0x70622335799b3c3c!2sAv%20San%20Antonio%2070%2C%20Santa%20Rosa%20de%20Lima%2C%2054740%20Cuautitl%C3%A1n%20Izcalli%2C%20M%C3%A9x.!5e0!3m2!1ses!2smx!4v1776626745713!5m2!1ses!2smx"
+            width="100%"
+            height="250"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <a
+          href="https://maps.app.goo.gl/eYEgvkmrX6mp5e876"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-accion"
+          >Abrir en Google Maps</a
+        >
+      </div>
+
+      <h2 class="seccion-titulo">Mesa de Regalos</h2>
+      <div class="banner-azul">
+        <p>
+          Tu presencia es nuestro verdadero regalo... Pero si deseas obsequiar
+          algo especial, hemos preparado un par de opciones, una mesa de regalo
+          física y una virtual.
+        </p>
+        <br />
+        <a
+          href="https://www.amazon.com.mx/wedding/share/MiNe260620"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-accion"
+          style="background-color: white"
+          >Mesa Virtual en Amazon</a
+        >
+      </div>
+
+      <h2 class="seccion-titulo">Confirmación</h2>
+      <p style="margin-bottom: 25px">
+        Por favor, confirma la asistencia de cada persona contemplada en tu
+        invitación.
+      </p>
+
+      <form id="formConfirmacion">
+        <div class="lista-invitados" id="contenedor-invitados"></div>
+        <div style="text-align: left">
+          <label
+            for="mensaje"
+            style="
+              font-weight: bold;
+              font-size: 0.95rem;
+              color: var(--azul-oscuro);
+              display: block;
+              margin-bottom: 8px;
+            "
+            >Mensaje para los novios (Opcional):</label
+          >
+          <textarea
+            id="mensaje"
+            rows="4"
+            placeholder="Déjanos tus buenos deseos..."
+          ></textarea>
+        </div>
+        <button type="submit" id="btnEnviar">Enviar Confirmación</button>
+      </form>
+      <div id="mensaje-respuesta"></div>
+      <h2 class="seccion-titulo">¡Los esperámos!</h2>
+      <div class="footer-icon">
+        <img src="icono_anillos.png" alt="Anillos entrelazados" />
+      </div>
+
+      <footer
+        style="
+          font-size: 10px;
+          opacity: 0.5;
+          text-align: center;
+          margin-top: 20px;
+          font-family: &quot;Lato&quot;, sans-serif;
+        "
+      >
+        <p>Música: Ordinary (Wedding Version) - Alex Warren</p>
+      </footer>
+    </div>
+
+    <script>
+      // ==========================================
+      // 1. LÓGICA DE ANIMACIÓN INICIAL
+      // ==========================================
+      function abrirInvitacion() {
+        const sobre = document.getElementById("sobre");
+        const pantallaInicio = document.getElementById("pantalla-inicio");
+        const invitacionPrincipal = document.getElementById(
+          "invitacion-principal",
+        );
+        const musica = document.getElementById("musicaFondo"); // Referencia al audio
+
+        // Ajustamos el volumen al 50% y damos play
+        musica.volume = 0.5;
+        musica.play().catch((e) => console.log("Audio bloqueado", e));
+
+        sobre.classList.add("abierto");
+
+        setTimeout(() => {
+          pantallaInicio.classList.add("deslizar-arriba");
+          invitacionPrincipal.style.display = "block";
+
+          setTimeout(() => {
+            pantallaInicio.style.display = "none";
+          }, 1200);
+        }, 800);
+      }
+
+      // ==========================================
+      // 2. LÓGICA DEL CRONOGRAMA (INTERSECTION OBSERVER)
+      // ==========================================
+      document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.2,
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".timeline-item").forEach((item) => {
+          observer.observe(item);
+        });
+      });
+
+      // ==========================================
+      // 3. LÓGICA DE BASE DE DATOS
+      // ==========================================
+      let invitadosActuales = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get("token");
+        const contenedor = document.getElementById("contenedor-invitados");
+        const btnEnviar = document.getElementById("btnEnviar");
+        const divRespuesta = document.getElementById("mensaje-respuesta");
+        const textareaMensaje = document.getElementById("mensaje");
+        const labelMensaje = document.querySelector('label[for="mensaje"]');
+
+        function mostrarError(textoError) {
+          contenedor.innerHTML = `<p style="color: var(--rojo-no); text-align: center; border: 1px solid var(--rojo-no); padding: 15px; border-radius: 8px;"><b>Aviso:</b> ${textoError}</p>`;
+          btnEnviar.style.display = "none";
+          textareaMensaje.style.display = "none";
+          labelMensaje.style.display = "none";
+        }
+
+        if (!token) {
+          mostrarError(
+            "Falta tu código de invitación en el enlace. Asegúrate de estar utilizando el enlace exacto que te compartimos por WhatsApp.",
+          );
+          return;
+        }
+
+        try {
+          // const respuesta = await fetch(`api.php?token=${token}`);
+          const respuesta = await fetch(`https://boda-mine.infinityfree.me/api.php?token=${token}`);
+          if (!respuesta.ok)
+            throw new Error("No se encontró el token o error en servidor");
+          const datos = await respuesta.json();
+          if (datos.error) throw new Error(datos.error);
+
+          invitadosActuales = datos.invitados;
+          let htmlInvitados = "";
+          let yaTeniaRespuestasGuardadas = false;
+
+          invitadosActuales.forEach((persona) => {
+            let checadoSi = "";
+            let checadoNo = "";
+
+            if (persona.asistira !== null) {
+              yaTeniaRespuestasGuardadas = true;
+              if (persona.asistira == 1) {
+                checadoSi = "checked";
+              } else if (persona.asistira == 0) {
+                checadoNo = "checked";
+              }
+            }
+
+            const apellidoTxt = persona.apellidos
+              ? ` ${persona.apellidos}`
+              : "";
+
+            htmlInvitados += `
+                        <div class="invitado-card">
+                            <div class="invitado-nombre">${persona.nombres}${apellidoTxt}</div>
+                            <div class="opciones-asistencia">
+                                <label>
+                                    <input type="radio" name="asistencia_${persona.id}" value="true" required ${checadoSi}> Sí, asistirá
+                                </label>
+                                <label>
+                                    <input type="radio" name="asistencia_${persona.id}" value="false" required ${checadoNo}> No asistirá
+                                </label>
+                            </div>
+                        </div>
+                    `;
+          });
+
+          contenedor.innerHTML = htmlInvitados;
+
+          if (yaTeniaRespuestasGuardadas) {
+            btnEnviar.innerText = "Actualizar Confirmación";
+          }
+
+          if (datos.mensaje_previo && datos.mensaje_previo.trim() !== "") {
+            textareaMensaje.value = datos.mensaje_previo;
+          }
+        } catch (error) {
+          console.error("Error al cargar la invitación:", error);
+          mostrarError(
+            "No pudimos encontrar tu invitación en nuestra base de datos. Por favor verifica tu enlace.",
+          );
+        }
+
+        document
+          .getElementById("formConfirmacion")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            btnEnviar.disabled = true;
+            btnEnviar.innerText = "Guardando...";
+            divRespuesta.innerText = "";
+
+            const confirmaciones = invitadosActuales.map((persona) => {
+              const seleccion = document.querySelector(
+                `input[name="asistencia_${persona.id}"]:checked`,
+              ).value;
+              return {
+                id_invitado: persona.id,
+                asistira: seleccion === "true",
+              };
+            });
+
+            const payloadAlBackend = {
+              token: token,
+              mensaje_grupo: textareaMensaje.value,
+              detalles_asistencia: confirmaciones,
+            };
+
+            try {
+              // const respuestaPOST = await fetch("api.php", {
+                const respuestaPOST = await fetch("https://boda-mine.infinityfree.me/api.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payloadAlBackend),
+              });
+
+              const resultado = await respuestaPOST.json();
+
+              if (respuestaPOST.ok && resultado.success) {
+                divRespuesta.style.color = "var(--verde-ok)";
+                divRespuesta.innerText =
+                  "¡Confirmación guardada con éxito! Muchas gracias.";
+              } else {
+                throw new Error(
+                  resultado.error || "Error del servidor al guardar",
+                );
+              }
+            } catch (error) {
+              console.error("Error en el POST:", error);
+              divRespuesta.style.color = "var(--rojo-no)";
+              divRespuesta.innerText =
+                "Hubo un problema de conexión al guardar. Intenta de nuevo.";
+            } finally {
+              btnEnviar.disabled = false;
+              btnEnviar.innerText = "Actualizar Confirmación";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
