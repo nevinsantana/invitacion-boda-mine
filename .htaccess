@@ -1,0 +1,15 @@
+# Activar motor de reescritura
+RewriteEngine On
+
+# Forzar HTTPS (Si alguien entra por http, lo manda a https)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Desactivar que se vea el listado de tus directorios
+Options -Indexes
+
+# Bloquear acceso directo al archivo de base de datos
+<Files "db.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
